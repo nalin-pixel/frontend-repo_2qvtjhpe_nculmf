@@ -1,4 +1,5 @@
 import { Linkedin, Github, Dribbble } from 'lucide-react'
+import { motion } from 'framer-motion'
 
 const accent = '#FF5722'
 
@@ -27,7 +28,13 @@ export default function Contact() {
           </div>
         </div>
 
-        <form className="grid grid-cols-1 gap-4">
+        <motion.form
+          className="grid grid-cols-1 gap-4"
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-120px' }}
+          transition={{ duration: 0.6 }}
+        >
           <div>
             <label className="block text-sm text-slate-300 mb-1">Name</label>
             <input className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white placeholder:text-slate-400 focus:outline-none focus:ring-2" style={{ outlineColor: accent }} placeholder="Your name" />
@@ -40,10 +47,10 @@ export default function Contact() {
             <label className="block text-sm text-slate-300 mb-1">Message</label>
             <textarea rows="4" className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white placeholder:text-slate-400 focus:outline-none focus:ring-2" style={{ outlineColor: accent }} placeholder="How can I help?" />
           </div>
-          <button type="button" className="justify-self-start px-5 py-2 rounded-full text-white font-medium shadow-lg hover:shadow-xl transition" style={{ backgroundColor: accent }}>
+          <motion.button type="button" className="justify-self-start px-5 py-2 rounded-full text-white font-medium shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 transition-transform" style={{ backgroundColor: accent }} whileTap={{ scale: 0.98 }}>
             Send Message
-          </button>
-        </form>
+          </motion.button>
+        </motion.form>
       </div>
 
       <div className="mt-12 text-center text-xs text-slate-500">© {new Date().getFullYear()} Rickcrafted Brands — All rights reserved.</div>

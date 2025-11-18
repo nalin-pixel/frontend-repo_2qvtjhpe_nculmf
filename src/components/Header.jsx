@@ -1,10 +1,17 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Menu, X } from 'lucide-react'
 
 const accent = '#FF5722'
 
 export default function Header() {
   const [open, setOpen] = useState(false)
+  const [elevated, setElevated] = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => setElevated(window.scrollY > 8)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   const navItems = [
     { label: 'Home', href: '#home' },
@@ -14,7 +21,7 @@ export default function Header() {
   ]
 
   return (
-    <header className="fixed top-0 inset-x-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-slate-900/60 bg-slate-900/80 border-b border-white/5">
+    <header className={`fixed top-0 inset-x-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-slate-900/60 border-b transition-all ${elevated ? 'bg-slate-900/90 border-white/10 shadow-[0_6px_30px_-12px_rgba(0,0,0,0.5)]' : 'bg-slate-900/70 border-white/5'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="h-16 flex items-center justify-between">
           <a href="#home" className="flex items-center gap-2 group">
@@ -34,7 +41,7 @@ export default function Header() {
             ))}
             <a
               href="#contact"
-              className="px-4 py-2 rounded-full text-sm font-medium text-white shadow-lg shadow-orange-500/20 hover:shadow-orange-500/40 transition"
+              className="px-4 py-2 rounded-full text-sm font-medium text-white shadow-lg shadow-orange-500/20 hover:shadow-orange-500/40 hover:-translate-y-0.5 active:translate-y-0 transition-transform"
               style={{ backgroundColor: accent }}
             >
               Get In Touch

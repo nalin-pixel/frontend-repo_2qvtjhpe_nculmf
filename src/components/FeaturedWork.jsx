@@ -1,3 +1,5 @@
+import { motion } from 'framer-motion'
+
 const accent = '#FF5722'
 
 const projects = [
@@ -31,20 +33,35 @@ export default function FeaturedWork() {
           <p className="mt-3 text-slate-300">Selected projects across UX, branding, and front‑end development.</p>
         </div>
 
-        <div className="mt-12 columns-1 sm:columns-2 lg:columns-3 gap-6 [column-fill:_balance]
-                        [&>article:not(:first-child)]:mt-6">
-          {projects.map((p) => (
-            <article key={p.title} className="break-inside-avoid rounded-2xl overflow-hidden border border-white/5 bg-white/5 hover:border-white/10 transition">
-              <div className="aspect-[4/3] bg-slate-800">
-                <img src={p.img} alt="" className="w-full h-full object-cover" />
+        <motion.div
+          className="mt-12 columns-1 sm:columns-2 lg:columns-3 gap-6 [column-fill:_balance]\n                        [&>article:not(:first-child)]:mt-6"
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: '-100px' }}
+          variants={{
+            hidden: {},
+            show: { transition: { staggerChildren: 0.12 } }
+          }}
+        >
+          {projects.map((p, i) => (
+            <motion.article
+              key={p.title}
+              variants={{ hidden: { opacity: 0, y: 18 }, show: { opacity: 1, y: 0 } }}
+              className="group break-inside-avoid rounded-2xl overflow-hidden border border-white/5 bg-white/5 hover:border-white/10 transition relative"
+            >
+              <div className="aspect-[4/3] bg-slate-800 overflow-hidden">
+                <img src={p.img} alt="" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               </div>
               <div className="p-5">
                 <span className="inline-flex items-center text-[11px] uppercase tracking-wider font-medium px-2.5 py-1 rounded-full text-white" style={{ backgroundColor: accent }}>{p.tag}</span>
                 <h3 className="mt-3 text-white font-semibold">{p.title}</h3>
               </div>
-            </article>
+              <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition" style={{
+                background: 'radial-gradient(800px 160px at var(--x,50%) var(--y,50%), rgba(255,87,34,0.08), transparent)'
+              }} />
+            </motion.article>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   )

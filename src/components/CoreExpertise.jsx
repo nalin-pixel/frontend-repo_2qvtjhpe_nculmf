@@ -1,4 +1,5 @@
-import { PenTool, Layout, Code, Figma, Paintbrush } from 'lucide-react'
+import { PenTool, Layout, Code } from 'lucide-react'
+import { motion } from 'framer-motion'
 
 const accent = '#FF5722'
 
@@ -36,9 +37,25 @@ export default function CoreExpertise() {
           <p className="mt-3 text-slate-300">A focused blend of strategy, design craft, and front-end engineering.</p>
         </div>
 
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <motion.div
+          className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: '-100px' }}
+          variants={{
+            hidden: {},
+            show: { transition: { staggerChildren: 0.12 } }
+          }}
+        >
           {skills.map(({ title, icon: Icon, desc, tools }) => (
-            <div key={title} className="group rounded-2xl border border-white/5 bg-gradient-to-b from-white/5 to-white/[0.02] p-6 hover:border-white/10 transition">
+            <motion.div
+              key={title}
+              variants={{ hidden: { opacity: 0, y: 14 }, show: { opacity: 1, y: 0 } }}
+              className="group rounded-2xl border border-white/5 bg-gradient-to-b from-white/5 to-white/[0.02] p-6 hover:border-white/10 transition relative overflow-hidden"
+            >
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition pointer-events-none" style={{
+                background: 'radial-gradient(600px 120px at var(--x,50%) calc(var(--y,50%) + 20px), rgba(255,87,34,0.12), transparent)'
+              }} />
               <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4" style={{ backgroundColor: 'rgba(255,87,34,0.1)', color: accent }}>
                 <Icon size={24} />
               </div>
@@ -51,9 +68,9 @@ export default function CoreExpertise() {
                   </span>
                 ))}
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   )
